@@ -169,11 +169,11 @@ document.getElementById('download').addEventListener('click', function(e) {
 
 var check_for_data;
 if(check_for_data = gup('data')) {
-  if(check_for_data.match(/^[1-8,]{11}$/) !== null) {
+//   if(check_for_data.match(/^[1-8,]{11}$/) !== null) { //This should probably be a legit regex
     check_for_data = check_for_data.split(',');
     for(var i = 0; i < inputs.length; i++) {
       inputs[i].value = parseInt(check_for_data.shift());
     }
     updateData();
-  }
+//   }
 }
