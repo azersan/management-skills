@@ -55,11 +55,11 @@ gradient.addColorStop(0, '#9be15d');
 gradient.addColorStop(1, '#00e3ae');
 
 var data = {
-  labels: ['Technical', 'User Experience', 'User Psychology', 'Data', 'Project Management', 'Wackiness'],
+  labels: ['Technical', 'User Experience', 'Data', 'Project Management', 'Wackiness'],
   datasets: [
     {
-      label: 'Product Passions',
-      data: [4, 4, 3, 3, 3, 3],
+      label: 'Management Skills',
+      data: [4, 4, 3, 3, 3],
       backgroundColor: gradient, /* "#c6dfb6", */
       borderColor: "rgba(0,0,0,0)",
       pointRadius: 0,
