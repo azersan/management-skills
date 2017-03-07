@@ -63,8 +63,8 @@ var data = {
     {
       label: 'My Ratings',
       data: [7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7],
-      backgroundColor: "rgba(66, 91, 118,0.2)",
-      borderColor: "rgba(66, 91, 118,1)",
+      backgroundColor: "rgba(255, 122, 89,0.2)",
+      borderColor: "rgba(255, 122, 89,1)",
       pointRadius: 0,
       lineCap: 'round',
       lineJoin: 'round'
