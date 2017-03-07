@@ -27,9 +27,6 @@ function updateData() {
       /* probably user is running this in a local file, which won't work */
     }
   }
-
-  /* update tweet intent */
-  document.getElementById('tweet').href = "https://twitter.com/intent/tweet?text=Just%20found%20my%20product%20person%20passions%2C%20take%20a%20look%3A&amp;url=https%3A%2F%2Fmontoya.github.io%2Fproduct-person%2F"+location.search+"&amp;via=cm0nt0y4&amp;related=uriharamati";
 }
 
 var canvas = document.getElementById('radar-chart');
