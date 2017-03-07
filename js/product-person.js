@@ -5,28 +5,24 @@
 function updateData() {
 
   var new_data = [];
-  var sum = 0;
-  for(var i = 0; i < inputs.length; i++) {
-    var new_value = parseInt(inputs[i].value);
+  for(var i = 0; i < self_eval_data.length; i++) {
+    var new_value = self_eval_data[i];
     new_data.push(new_value);
-    sum += new_value;
   }
-  data.datasets[0].data = new_data;
-  radar_chart.update();
 
-  var remainder = 20 - sum;
-  if(remainder < 0) {
-    form_helper.textContent = Math.abs(remainder) + ' points over \u26a0\ufe0f';
-    form_helper.className = 'warning';
+  var new_mgr_data = []
+  for(var i = 0; i < mgr_eval_data.length; i++) {
+    var new_value = mgr_eval_data[i];
+    new_mgr_data.push(new_value);
   }
-  else {
-    form_helper.textContent = remainder + ' points left';
-    form_helper.className = '';
-  }
+
+  data.datasets[0].data = new_data;
+  data.datasets[1].data = new_mgr_data;
+  radar_chart.update();
 
   if(window.history.replaceState) {
     try {
-      window.history.replaceState({}, {}, location.origin+location.pathname+'?data='+new_data.join(','));
+      window.history.replaceState({}, {}, location.origin+location.pathname+'?self_data='+new_data.join(',')+'&mgr_data='+new_mgr_data.join(','));
     } catch(err) {
       /* probably user is running this in a local file, which won't work */
     }
@@ -35,19 +31,6 @@ function updateData() {
   /* update tweet intent */
   document.getElementById('tweet').href = "https://twitter.com/intent/tweet?text=Just%20found%20my%20product%20person%20passions%2C%20take%20a%20look%3A&amp;url=https%3A%2F%2Fmontoya.github.io%2Fproduct-person%2F"+location.search+"&amp;via=cm0nt0y4&amp;related=uriharamati";
 }
-
-function updateFormBottomPadding() {
-  if(window.innerWidth > 959) {
-    document.getElementById('form').style.paddingBottom = 24 + document.getElementById('about').offsetHeight + 'px';
-  }
-  else {
-    document.getElementById('form').style.paddingBottom = '24px';
-  }
-}
-
-window.onresize = updateFormBottomPadding;
-
-updateFormBottomPadding();
 
 var canvas = document.getElementById('radar-chart');
 var gradient = canvas.getContext('2d').createLinearGradient(240, 0, 240, 320);
@@ -78,30 +61,19 @@ var data = {
             'Planning for contingencies'],
   datasets: [
     {
-      label: 'Management Skills',
-      data: [7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7,
-              7],
-      backgroundColor: gradient, /* "#c6dfb6", */
-      borderColor: "rgba(0,0,0,0)",
+      label: 'My Ratings',
+      data: [7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7],
+      backgroundColor: "rgba(200,0,0,0.2)",
+      borderColor: "rgba(200,0,0,1)",
+      pointRadius: 0,
+      lineCap: 'round',
+      lineJoin: 'round'
+    },
+    {
+      label: 'Manager Ratings',
+      data: [7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7],
+      backgroundColor: "rgba(0,200,0,0.2)",
+      borderColor: "rgba(0,200,0,1)",
       pointRadius: 0,
       lineCap: 'round',
       lineJoin: 'round'
@@ -112,8 +84,9 @@ var data = {
 var radar_chart = new Chart(canvas, {
   type: 'radar',
   data: data,
+  fill: false,
   options: {
-    responsive: false,
+    responsive: true,
     animationSteps: 2,
     legend: {
       display: true,
@@ -153,13 +126,6 @@ var radar_chart = new Chart(canvas, {
   }
 });
 
-var inputs = document.querySelectorAll('.passion-value');
-for(var i = 0; i < inputs.length; i++) {
-  var input = inputs[i];
-  input.addEventListener('input', updateData);
-}
-
-var form_helper = document.getElementById('form-helper');
 
 document.getElementById('download').addEventListener('click', function(e) {
   canvas.toBlob(function(blob) {
@@ -168,12 +134,33 @@ document.getElementById('download').addEventListener('click', function(e) {
 });
 
 var check_for_data;
-if(check_for_data = gup('data')) {
+var self_eval_data = [];
+if(check_for_data = gup('self_data')) {
 //   if(check_for_data.match(/^[1-8,]{11}$/) !== null) { //This should probably be a legit regex
     check_for_data = check_for_data.split(',');
-    for(var i = 0; i < inputs.length; i++) {
-      inputs[i].value = parseInt(check_for_data.shift());
+    var length = check_for_data.length;
+    for(var i = 0; i < length; i++) {
+      var val = parseInt(check_for_data.shift());
+      self_eval_data[i] = val;
     }
-    updateData();
+
 //   }
 }
+
+var check_for_mgr_data;
+var mgr_eval_data = [];
+if(check_for_mgr_data = gup('mgr_data')) {
+//   if(check_for_data.match(/^[1-8,]{11}$/) !== null) { //This should probably be a legit regex
+    check_for_mgr_data = check_for_mgr_data.split(',');
+    var length = check_for_mgr_data.length;
+    for(var i = 0; i < length; i++) {
+      var val = parseInt(check_for_mgr_data.shift());
+      mgr_eval_data[i] = val;
+    }
+
+//   }
+}
+
+
+
+updateData();
