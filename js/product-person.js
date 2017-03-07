@@ -91,7 +91,6 @@ var radar_chart = new Chart(canvas, {
     legend: {
       display: true,
       labels: {
-        boxWidth: 0,
         fontSize: 18,
         fontStyle: "300",
         fontColor: "#333",
