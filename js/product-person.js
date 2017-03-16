@@ -102,7 +102,7 @@ var radar_chart = new Chart(canvas, {
       ticks: {
         /* beginAtZero: true, */
         min: 0,
-        suggestedMax: 6,
+        max: 10,
         stepSize: 1,
         display: false,
         fontFamily: "'Work Sans',sans-serif"
